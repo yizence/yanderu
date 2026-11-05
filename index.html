@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>#_x</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=DM+Mono:wght@400&display=swap">
+<style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>
+/* Layout: a near-empty page — wordmark + one link up top, one GIF in the middle; the blog is a single narrow column. */
+:root {
+  --bg: #f5f6f7;
+  --ink: #1e2024;
+  --muted: #868b93;
+  --line: #e2e4e8;
+  --pink: #f2a7bd;
+  --sky: #a9cbe8;
+  --leaf: #9fcf9a;
+  --display: "Fraunces", Georgia, serif;
+  --body: "Newsreader", Georgia, "Times New Roman", serif;
+  --mono: "DM Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15171a; --ink: #e9eaec; --muted: #7d828a; --line: #2a2d32;
+    --pink: #d98aa2; --sky: #7fa6c8; --leaf: #7fae7a; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15171a; --ink: #e9eaec; --muted: #7d828a; --line: #2a2d32;
+  --pink: #d98aa2; --sky: #7fa6c8; --leaf: #7fae7a; color-scheme: dark;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 18px; line-height: 1.65; }
+.wrap {
+  max-width: 720px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 64px;
+}
+header { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.mark { font-family: var(--display); font-weight: 500; font-size: 22px; letter-spacing: -0.01em; color: var(--ink); text-decoration: none; }
+nav a { font-family: var(--mono); font-size: 13px; letter-spacing: 0.04em; color: var(--muted); text-decoration: none; }
+nav a:hover, nav a[aria-current="page"] { color: var(--ink); }
+a:focus-visible { outline: 2px solid var(--sky); outline-offset: 3px; border-radius: 2px; }
+
+/* home */
+.hero { display: flex; justify-content: center; margin-top: clamp(64px, 14vw, 140px); }
+.hero img { width: 100%; max-width: 480px; height: auto; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+
+/* blog */
+.list { list-style: none; padding: 0; margin: 72px 0 0; display: grid; gap: 4px; }
+.list a { display: flex; gap: 20px; align-items: baseline; padding: 10px 0; color: var(--ink); text-decoration: none; }
+.list a:hover .t { text-decoration: underline; text-decoration-color: var(--muted); text-underline-offset: 4px; }
+.date { font-family: var(--mono); font-size: 13px; color: var(--muted); flex: 0 0 88px; font-variant-numeric: tabular-nums; }
+.t { min-width: 0; }
+
+article { max-width: 62ch; margin-top: 72px; }
+article h1 { font-family: var(--display); font-weight: 300; font-size: clamp(30px, 6vw, 40px); line-height: 1.15; letter-spacing: -0.02em; margin: 6px 0 28px; text-wrap: balance; }
+article p { margin: 0 0 1.1em; }
+.back { display: inline-block; margin-top: 40px; font-family: var(--mono); font-size: 13px; color: var(--muted); text-decoration: none; }
+.back:hover { color: var(--ink); }
+
+.pic { margin: 0 0 1.4em; }
+.pic img { display: block; width: 100%; height: auto; border-radius: 3px; }
+.empty { margin-top: 72px; color: var(--muted); font-style: italic; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="mark" href="#home">#_x</a>
+    <nav><a href="#blog" id="navblog">blog</a></nav>
+  </header>
+
+  <main id="home">
+    <div class="hero"><img src="hero.gif" alt="" width="640" height="376"></div>
+  </main>
+
+  <main id="blog" hidden>
+    <ul class="list" id="list"></ul>
+    <p class="empty" id="empty" hidden>Nothing here yet.</p>
+  </main>
+
+  <main id="post" hidden>
+    <article>
+      <div class="date" id="pdate"></div>
+      <h1 id="ptitle"></h1>
+      <div id="pbody"></div>
+    </article>
+    <a class="back" href="#blog">&larr; all posts</a>
+  </main>
+</div>
+
+<!-- Posts: newest first is not required; the page sorts by date. -->
+<script type="application/json" id="posts-data">[{"slug":"hello","date":"2026-11-04","title":"hello","body":"First post. This is a placeholder so the blog isn't empty. Delete it whenever you like.\n\nPosts can be as short as a sentence or as long as you want."}]</script>
+<script>
+let POSTS = [];
+try { POSTS = JSON.parse(document.getElementById("posts-data").textContent) || []; } catch (e) {}
+POSTS.sort((a, b) => b.date.localeCompare(a.date));
+
+const $ = (id) => document.getElementById(id);
+const fmt = (d) => d.replaceAll("-", ".");
+const esc = (t) => t.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const IMG = /^\[image: ((?:\/|https:\/\/)[^\s"<>\]]+)\]$/;
+const paras = (t) => t.trim().split(/\n\s*\n/).map(p => {
+  const m = p.trim().match(IMG);
+  if (m) return `<figure class="pic"><img src="${esc(m[1])}" alt="" loading="lazy"></figure>`;
+  return "<p>" + esc(p).replace(/\n/g, "<br>") + "</p>";
+}).join("");
+
+function renderList() {
+  $("list").innerHTML = POSTS.map(p =>
+    `<li><a href="#p-${esc(p.slug)}"><span class="date">${fmt(p.date)}</span><span class="t">${esc(p.title)}</span></a></li>`).join("");
+  $("empty").hidden = POSTS.length > 0;
+}
+
+function route() {
+  const h = location.hash.slice(1) || "home";
+  const post = h.startsWith("p-") && POSTS.find(p => "p-" + p.slug === h);
+  $("home").hidden = !(h === "home" || (!post && h !== "blog"));
+  $("blog").hidden = h !== "blog";
+  $("post").hidden = !post;
+  if (post) { $("pdate").textContent = fmt(post.date); $("ptitle").textContent = post.title; $("pbody").innerHTML = paras(post.body); }
+  if (h === "blog" || post) $("navblog").setAttribute("aria-current", "page"); else $("navblog").removeAttribute("aria-current");
+  window.scrollTo(0, 0);
+}
+renderList();
+addEventListener("hashchange", route);
+route();
+
+</script>
+</body>
+</html>
