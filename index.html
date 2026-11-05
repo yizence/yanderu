@@ -46,7 +46,7 @@ nav a { font-family: var(--mono); font-size: 13px; letter-spacing: 0.04em; color
 nav a:hover, nav a[aria-current="page"] { color: var(--ink); }
 nav { display: flex; align-items: center; gap: 18px; }
 .ig { display: inline-flex; width: 30px; height: 30px; align-items: center; justify-content: center; border-radius: 50%; color: var(--muted); transition: color .2s, background .2s, transform .2s; }
-.ig svg { width: 17px; height: 17px; display: block; }
+.ig-glyph { width: 16px; height: 16px; display: block; background: currentColor; -webkit-mask: url(/instagram.png) center / contain no-repeat; mask: url(/instagram.png) center / contain no-repeat; }
 .ig:hover, .ig:focus-visible { color: var(--ink); background: var(--line); transform: translateY(-2px) rotate(-6deg); }
 .ig:active { transform: translateY(0) scale(.92); }
 a:focus-visible { outline: 2px solid var(--sky); outline-offset: 3px; border-radius: 2px; }
@@ -95,7 +95,7 @@ article p { margin: 0 0 1.1em; }
 <div class="wrap">
   <header>
     <a class="mark" href="#home">zuu</a>
-    <nav><a href="#posts" id="navblog">posts</a><a class="ig" href="https://www.instagram.com/yizuai/" target="_blank" rel="noopener" aria-label="instagram" title="instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5a2 2 0 0 1 2-2h2.6l1.6-2.3h5.6l1.6 2.3H19a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><circle cx="12" cy="13" r="3.8"/></svg></a></nav>
+    <nav><a href="#posts" id="navblog">posts</a><a class="ig" href="https://www.instagram.com/yizuai/" target="_blank" rel="noopener" aria-label="instagram" title="instagram"><span class="ig-glyph" aria-hidden="true"></span></a></nav>
   </header>
 
   <main id="home">
