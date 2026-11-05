@@ -44,6 +44,11 @@ header { display: flex; justify-content: space-between; align-items: baseline; g
 .mark { font-family: var(--display); font-weight: 500; font-size: 22px; letter-spacing: -0.01em; color: var(--ink); text-decoration: none; }
 nav a { font-family: var(--mono); font-size: 13px; letter-spacing: 0.04em; color: var(--muted); text-decoration: none; }
 nav a:hover, nav a[aria-current="page"] { color: var(--ink); }
+nav { display: flex; align-items: center; gap: 18px; }
+.ig { display: inline-flex; width: 30px; height: 30px; align-items: center; justify-content: center; border-radius: 50%; color: var(--muted); transition: color .2s, background .2s, transform .2s; }
+.ig svg { width: 17px; height: 17px; display: block; }
+.ig:hover, .ig:focus-visible { color: var(--ink); background: var(--line); transform: translateY(-2px) rotate(-6deg); }
+.ig:active { transform: translateY(0) scale(.92); }
 a:focus-visible { outline: 2px solid var(--sky); outline-offset: 3px; border-radius: 2px; }
 
 /* home */
@@ -90,7 +95,7 @@ article p { margin: 0 0 1.1em; }
 <div class="wrap">
   <header>
     <a class="mark" href="#home">zuu</a>
-    <nav><a href="#blog" id="navblog">blog</a></nav>
+    <nav><a href="#posts" id="navblog">posts</a><a class="ig" href="https://www.instagram.com/yizuai/" target="_blank" rel="noopener" aria-label="instagram" title="instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5a2 2 0 0 1 2-2h2.6l1.6-2.3h5.6l1.6 2.3H19a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><circle cx="12" cy="13" r="3.8"/></svg></a></nav>
   </header>
 
   <main id="home">
@@ -108,7 +113,7 @@ article p { margin: 0 0 1.1em; }
       <h1 id="ptitle"></h1>
       <div id="pbody"></div>
     </article>
-    <a class="back" href="#blog">&larr; all posts</a>
+    <a class="back" href="#posts">&larr; all posts</a>
   </main>
 </div>
 
@@ -117,7 +122,7 @@ article p { margin: 0 0 1.1em; }
 </div>
 
 <!-- Posts: newest first is not required; the page sorts by date. -->
-<script type="application/json" id="posts-data">[{"slug":"cant-stop-wont-stop","date":"2026-11-04","title":"can't stop won't stop","body":"#_x"}]</script>
+<script type="application/json" id="posts-data">[{"slug": "over-10-days", "date": "2026-11-04", "title": "over 10 days", "body": "11/5 - amc 10a\n11/6, 11/7 - hmmt\n11/8 - calico\n11/10 - stripe oa\n11/12 - stripe r1 interview\n11/13 - amc 10b\n11/14 - mmaths"}, {"slug": "cant-stop-wont-stop", "date": "2026-11-04", "title": "can't stop won't stop", "body": "#_x"}]</script>
 <script>
 let POSTS = [];
 try { POSTS = JSON.parse(document.getElementById("posts-data").textContent) || []; } catch (e) {}
@@ -140,7 +145,8 @@ function renderList() {
 }
 
 function route() {
-  const h = location.hash.slice(1) || "home";
+  let h = location.hash.slice(1) || "home";
+  if (h === "posts") h = "blog";
   const post = h.startsWith("p-") && POSTS.find(p => "p-" + p.slug === h);
   $("home").hidden = !(h === "home" || (!post && h !== "blog"));
   $("blog").hidden = h !== "blog";
