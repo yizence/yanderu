@@ -47,7 +47,7 @@ a:focus-visible { outline: 2px solid var(--sky); outline-offset: 3px; border-rad
 
 /* home */
 .hero { display: flex; justify-content: center; margin-top: clamp(64px, 14vw, 140px); }
-.hero img { width: 100%; max-width: 600px; height: auto; border-radius: 4px; }
+.hero img { width: 100%; max-width: 480px; height: auto; border-radius: 4px; }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
 
 /* blog */
@@ -95,7 +95,7 @@ article p { margin: 0 0 1.1em; }
 </div>
 
 <!-- Posts: newest first is not required; the page sorts by date. -->
-<script type="application/json" id="posts-data">[{"slug":"cant-stop-wont-stop","date":"2026-11-04","title":"cant stop wont stop","body":"n_n"}]</script>
+<script type="application/json" id="posts-data">[{"slug":"cant-stop-wont-stop","date":"2026-11-04","title":"can't stop won't stop","body":"#_x"}]</script>
 <script>
 let POSTS = [];
 try { POSTS = JSON.parse(document.getElementById("posts-data").textContent) || []; } catch (e) {}
