@@ -56,6 +56,10 @@ a:focus-visible { outline: 2px solid var(--sky); outline-offset: 3px; border-rad
 .hero img { width: 100%; max-width: 480px; height: auto; border-radius: 4px; }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
 
+.counter { display: flex; justify-content: center; align-items: flex-end; gap: 4px; margin-top: 48px; min-height: 104px; }
+.counter img { height: 104px; width: auto; image-rendering: pixelated; }
+@media (max-width: 520px) { .counter img { height: 72px; } .counter { min-height: 72px; gap: 2px; } }
+
 /* blog */
 .list { list-style: none; padding: 0; margin: 72px 0 0; display: grid; gap: 4px; }
 .list a { display: flex; gap: 20px; align-items: baseline; padding: 10px 0; color: var(--ink); text-decoration: none; }
@@ -100,6 +104,7 @@ article p { margin: 0 0 1.1em; }
 
   <main id="home">
     <div class="hero"><img src="hero.gif" alt="" width="640" height="376"></div>
+    <div class="counter" id="counter" role="img"></div>
   </main>
 
   <main id="blog" hidden>
@@ -159,6 +164,17 @@ renderList();
 addEventListener("hashchange", route);
 route();
 
+
+// day counter: 5752 on 2026-11-08 (New York time), +1 each day, shown with one leading zero
+(() => {
+  const ny = new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+  const [y, m, d] = ny.split("-").map(Number);
+  const days = Math.round((Date.UTC(y, m - 1, d) - Date.UTC(2026, 10, 8)) / 86400000);
+  const text = "0" + (5752 + Math.max(0, days));
+  const el = $("counter");
+  el.setAttribute("aria-label", text);
+  el.innerHTML = [...text].map(c => `<img src="/counter/${c}.png" alt="">`).join("");
+})();
 
 // desk buddy: hops when you click links/buttons, leans when you hover one, bounces + hearts when poked
 (() => {
