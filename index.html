@@ -189,6 +189,15 @@ addEventListener("hashchange", route);
 route();
 
 
+// warm the web fonts used on hidden pages so they don't swap in (and jump size) on first click
+if (document.fonts && document.fonts.load) {
+  const jp = document.querySelector(".entry").textContent;
+  const blog = POSTS.map(p => p.title + p.body).join("");
+  ["400 18px Newsreader", "italic 400 18px Newsreader", "300 40px Fraunces", "500 22px Fraunces", "400 13px 'DM Mono'"]
+    .forEach(f => document.fonts.load(f, blog + "0123456789.←").catch(() => {}));
+  ["400 17px 'Noto Serif JP'", "600 46px 'Noto Serif JP'"].forEach(f => document.fonts.load(f, jp).catch(() => {}));
+}
+
 // day counter: 5752 on 2026-11-08 (New York time), +1 each day, shown with one leading zero
 (() => {
   const ny = new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
