@@ -66,7 +66,8 @@ a:focus-visible { outline: 2px solid var(--sky); outline-offset: 3px; border-rad
 .entry ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; font-size: 17px; line-height: 1.8; }
 .entry li { display: grid; grid-template-columns: 2em 1fr; }
 .entry li b { font-weight: 600; color: var(--muted); }
-.entry .tag { font-size: 13px; border: 1px solid var(--line); padding: 0 5px; margin-right: 4px; border-radius: 3px; color: var(--muted); }
+.entry [lang="en"] { font-family: var(--body); font-size: 18px; }
+.entry .tag { font-family: var(--mono); font-size: 12px; border: 1px solid var(--line); padding: 0 5px; margin-right: 4px; border-radius: 3px; color: var(--muted); }
 .counter { display: flex; justify-content: center; align-items: flex-end; gap: 3px; margin-top: 72px; min-height: 100px; }
 .counter img { height: 100px; width: 45px; image-rendering: pixelated; }
 
@@ -109,7 +110,7 @@ article p { margin: 0 0 1.1em; }
 <div class="wrap">
   <header>
     <a class="mark" href="#home">zuu</a>
-    <nav><a href="#posts" id="navblog">posts</a><a href="#about" id="navabout">about</a><a class="ig" href="https://www.instagram.com/yizuai/" target="_blank" rel="noopener" aria-label="instagram" title="instagram"><span class="ig-glyph" aria-hidden="true"></span></a></nav>
+    <nav><a href="#about" id="navabout">about</a><a href="#posts" id="navblog">posts</a><a class="ig" href="https://www.instagram.com/yizuai/" target="_blank" rel="noopener" aria-label="instagram" title="instagram"><span class="ig-glyph" aria-hidden="true"></span></a></nav>
   </header>
 
   <main id="home">
@@ -126,9 +127,9 @@ article p { margin: 0 0 1.1em; }
       <div class="head"><h1>病んでる</h1><div class="yomi">やんでる<span>yanderu</span></div></div>
       <p class="etym">〔動詞「病む」＋「いる」の口語形「〜でる」〕</p>
       <ol>
-        <li><b>一</b><span>病気にかかっている。体が弱っている。</span></li>
-        <li><b>二</b><span>心が疲れて不安定になっている。精神的にまいっている。</span></li>
-        <li><b>三</b><span><span class="tag">俗</span>思いつめすぎて、考え方や行動が普通ではなくなっている様子。「あの子、ちょっと―よね」</span></li>
+        <li><b>一</b><span lang="en">to be sick; to be ill or physically worn down.</span></li>
+        <li><b>二</b><span lang="en">to be emotionally exhausted or unstable; to be mentally worn out.</span></li>
+        <li><b>三</b><span lang="en"><span class="tag">slang</span>to be so fixated that your thoughts and actions are no longer normal. “she’s kinda yanderu, isn’t she”</span></li>
       </ol>
     </div>
     <div class="counter" id="counter" role="img"></div>
