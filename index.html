@@ -7,7 +7,7 @@
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=DM+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=DM+Mono:wght@400&family=Noto+Serif+JP:wght@400;600&display=swap">
 <style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <style>
 /* Layout: a near-empty page — wordmark + one link up top, one GIF in the middle; the blog is a single narrow column. */
@@ -56,11 +56,19 @@ a:focus-visible { outline: 2px solid var(--sky); outline-offset: 3px; border-rad
 .hero img { width: 100%; max-width: 480px; height: auto; border-radius: 4px; }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
 
-#home { display: flex; flex-direction: column; min-height: calc(100vh - 66px); min-height: calc(100svh - 66px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)); margin-bottom: -64px; }
-.counter-zone { flex: 1; display: flex; align-items: center; justify-content: center; padding-block: 32px; }
-.counter { display: flex; justify-content: center; align-items: flex-end; gap: 4px; min-height: 104px; }
-.counter img { height: 104px; width: auto; }
-@media (max-width: 520px) { .counter img { height: 72px; } .counter { min-height: 72px; gap: 2px; } }
+/* about: a dictionary entry */
+.entry { margin-top: 72px; max-width: 34em; font-family: "Noto Serif JP", var(--body); }
+.entry .head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.entry h1 { font-family: "Noto Serif JP", var(--display); font-weight: 600; font-size: clamp(34px, 7vw, 46px); letter-spacing: .04em; margin: 0; line-height: 1.2; }
+.entry .yomi { font-size: 16px; color: var(--muted); }
+.entry .yomi span { font-family: var(--mono); font-size: 13px; letter-spacing: .04em; margin-left: 6px; }
+.entry .etym { margin: 14px 0 22px; font-size: 14px; color: var(--muted); }
+.entry ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; font-size: 17px; line-height: 1.8; }
+.entry li { display: grid; grid-template-columns: 2em 1fr; }
+.entry li b { font-weight: 600; color: var(--muted); }
+.entry .tag { font-size: 13px; border: 1px solid var(--line); padding: 0 5px; margin-right: 4px; border-radius: 3px; color: var(--muted); }
+.counter { display: flex; justify-content: center; align-items: flex-end; gap: 3px; margin-top: 72px; min-height: 100px; }
+.counter img { height: 100px; width: 45px; image-rendering: pixelated; }
 
 /* blog */
 .list { list-style: none; padding: 0; margin: 72px 0 0; display: grid; gap: 4px; }
@@ -93,7 +101,7 @@ article p { margin: 0 0 1.1em; }
 @keyframes hop { 0% { transform: translateY(0) scale(1,1); } 20% { transform: translateY(0) scale(1.06,.92); } 55% { transform: translateY(-18px) scale(.97,1.04); } 100% { transform: translateY(0) scale(1,1); } }
 @keyframes bounce { 0% { transform: translateY(0); } 15% { transform: translateY(0) scale(1.08,.9); } 40% { transform: translateY(-34px) scale(.96,1.05); } 60% { transform: translateY(0) scale(1.06,.94); } 78% { transform: translateY(-12px); } 100% { transform: translateY(0); } }
 @keyframes float { 0% { opacity: 0; transform: translate(0,0) scale(.6); } 15% { opacity: 1; } 100% { opacity: 0; transform: translate(var(--dx), -70px) scale(1.1); } }
-@media (max-width: 520px) { .buddy { width: 72px; right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); } .wrap { padding-bottom: 130px; } #home { margin-bottom: -130px; } }
+@media (max-width: 520px) { .buddy { width: 72px; right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); } .wrap { padding-bottom: 130px; } }
 @media (prefers-reduced-motion: reduce) { .buddy img, .buddy .body, .heart { animation: none !important; } }
 </style>
 </head>
@@ -101,17 +109,29 @@ article p { margin: 0 0 1.1em; }
 <div class="wrap">
   <header>
     <a class="mark" href="#home">zuu</a>
-    <nav><a href="#posts" id="navblog">posts</a><a class="ig" href="https://www.instagram.com/yizuai/" target="_blank" rel="noopener" aria-label="instagram" title="instagram"><span class="ig-glyph" aria-hidden="true"></span></a></nav>
+    <nav><a href="#posts" id="navblog">posts</a><a href="#about" id="navabout">about</a><a class="ig" href="https://www.instagram.com/yizuai/" target="_blank" rel="noopener" aria-label="instagram" title="instagram"><span class="ig-glyph" aria-hidden="true"></span></a></nav>
   </header>
 
   <main id="home">
     <div class="hero"><img src="hero.gif" alt="" width="640" height="376"></div>
-    <div class="counter-zone"><div class="counter" id="counter" role="img"></div></div>
   </main>
 
   <main id="blog" hidden>
     <ul class="list" id="list"></ul>
     <p class="empty" id="empty" hidden>Nothing here yet.</p>
+  </main>
+
+  <main id="about" hidden>
+    <div class="entry" lang="ja">
+      <div class="head"><h1>病んでる</h1><div class="yomi">やんでる<span>yanderu</span></div></div>
+      <p class="etym">〔動詞「病む」＋「いる」の口語形「〜でる」〕</p>
+      <ol>
+        <li><b>一</b><span>病気にかかっている。体が弱っている。</span></li>
+        <li><b>二</b><span>心が疲れて不安定になっている。精神的にまいっている。</span></li>
+        <li><b>三</b><span><span class="tag">俗</span>思いつめすぎて、考え方や行動が普通ではなくなっている様子。「あの子、ちょっと―よね」</span></li>
+      </ol>
+    </div>
+    <div class="counter" id="counter" role="img"></div>
   </main>
 
   <main id="post" hidden>
@@ -155,11 +175,13 @@ function route() {
   let h = location.hash.slice(1) || "home";
   if (h === "posts") h = "blog";
   const post = h.startsWith("p-") && POSTS.find(p => "p-" + p.slug === h);
-  $("home").hidden = !(h === "home" || (!post && h !== "blog"));
+  $("home").hidden = !(h === "home" || (!post && h !== "blog" && h !== "about"));
   $("blog").hidden = h !== "blog";
+  $("about").hidden = h !== "about";
   $("post").hidden = !post;
   if (post) { $("pdate").textContent = fmt(post.date); $("ptitle").textContent = post.title; $("pbody").innerHTML = paras(post.body); }
   if (h === "blog" || post) $("navblog").setAttribute("aria-current", "page"); else $("navblog").removeAttribute("aria-current");
+  if (h === "about") $("navabout").setAttribute("aria-current", "page"); else $("navabout").removeAttribute("aria-current");
   window.scrollTo(0, 0);
 }
 renderList();
@@ -175,7 +197,7 @@ route();
   const text = "0" + (5752 + Math.max(0, days));
   const el = $("counter");
   el.setAttribute("aria-label", text);
-  el.innerHTML = [...text].map(c => `<img src="/counter/${c}.png" alt="">`).join("");
+  el.innerHTML = [...text].map(c => `<img src="/counter/${c}.gif" alt="" width="45" height="100">`).join("");
 })();
 
 // desk buddy: hops when you click links/buttons, leans when you hover one, bounces + hearts when poked
